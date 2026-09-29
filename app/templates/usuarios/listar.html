@@ -65,14 +65,20 @@
     </nav>
 
     <table class="table">
+      
 
         <thead>
-            <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Tipo</th>
-                <th>Ações</th>
-            </tr>
+          <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Tipo</th>
+              <th>Ações</th>
+              <th class="text-end">
+                  <a href="{{ url_for('main.criar_usuario') }}" class="btn btn-primary btn-sm">
+                      Criar usuário
+                  </a>
+              </th>
+          </tr>
         </thead>
 
         <tbody>
@@ -102,6 +108,7 @@
                     </a>
 
                 </td>
+                <td></td>
 
             </tr>
 

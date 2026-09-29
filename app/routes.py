@@ -177,9 +177,14 @@ def criar_usuario():
         nome = request.form["nome"]
         email = request.form["email"]
         senha = request.form["senha"]
-        tipo = request.form["tipo"]
+        
 
         senha_hash = generate_password_hash(senha)
+
+        if session.get("usuario_tipo") == "admin":
+            tipo = request.form.get("tipo", "usuario")
+        else:
+            tipo = "usuario"
 
         novo_usuario = Usuario(
             nome=nome,
@@ -190,6 +195,9 @@ def criar_usuario():
 
         db.session.add(novo_usuario)
         db.session.commit()
+
+        if session.get("usuario_tipo") == "admin":
+            return redirect(url_for("main.listar_usuarios"))
 
         return redirect(url_for("main.login"))
 
