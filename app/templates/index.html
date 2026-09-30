@@ -50,7 +50,7 @@
             </li>
 
             {% if session.get("usuario_id") %}
-                <a href="{{ url_for('main.area_usuario') }}" class="nav-link active">Minha conta</a>
+                <li><a href="{{ url_for('main.area_usuario') }}" class="nav-link active">Minha conta</a></li>
             {% else %}
                 <a href="{{ url_for('main.login') }}" class="nav-link active">Entrar</a>
             {% endif %}
@@ -163,9 +163,9 @@
       <nav class="rodape__coluna" aria-label="Navegação do rodapé">
         <h3 class="rodape__titulo">Navegue</h3>
         <ul class="rodape__lista">
-          <li class="rodape__item"><a class="rodape__link" href="#inicio">Início</a></li>
-          <li class="rodape__item"><a class="rodape__link" href="#patrimonios">Patrimônios</a></li>
-          <li class="rodape__item"><a class="rodape__link" href="#quiz">Quiz</a></li>
+          <li class="rodape__item"><a class="rodape__link" href="/">Início</a></li>
+          <li class="rodape__item"><a class="rodape__link" href="/#patrimonios">Patrimônios</a></li>
+          <li class="rodape__item"><a class="rodape__link" href="/quiz">Quiz</a></li>
           <li class="rodape__item"><a class="rodape__link" href="#sobre">Sobre o projeto</a></li>
         </ul>
       </nav>
@@ -173,8 +173,15 @@
       <div class="rodape__coluna">
         <h3 class="rodape__titulo">Sua conta</h3>
         <ul class="rodape__lista">
-          <li class="rodape__item"><a class="rodape__link" href="#conta">Minha conta</a></li>
-          <li class="rodape__item"><a class="rodape__link" href="#contato">Fale com a gente</a></li>
+          {% if session.get("usuario_id") %}
+                <li><a href="{{ url_for('main.area_usuario') }}" class="rodape__link">Minha conta</a></li>
+            {% else %}
+                <li><a href="{{ url_for('main.login') }}" class="rodape__link">Entrar</a></li>
+            {% endif %}
+
+            {% if not session.get("usuario_id") %}
+                <li><a href="{{ url_for('main.criar_usuario') }}" class="rodape__link">Criar Conta</a></li>
+            {% endif %}
         </ul>
       </div>
     </div>
