@@ -348,3 +348,89 @@ body {
 .oculto {
     display: none;
 }
+
+.rodape {
+  --rodape-verde-escuro: #1e2924;
+  --rodape-verde-medio: #2a3832;
+  --rodape-dourado: #e8b95a;
+  --rodape-texto: #d9dfdb;
+  --rodape-texto-suave: #98a59e;
+
+  box-sizing: border-box;
+  background: var(--rodape-verde-escuro);
+  color: var(--rodape-texto);
+  padding: 56px 24px 0;
+  border-top: 3px solid var(--rodape-dourado);
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.rodape__grade {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+
+.rodape__marca {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--rodape-dourado);
+  margin: 0 0 12px;
+}
+
+.rodape__desc {
+  margin: 0;
+  max-width: 38ch;
+  line-height: 1.6;
+  color: var(--rodape-texto-suave);
+}
+
+.rodape__titulo {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.rodape__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rodape__item + .rodape__item {
+  margin-top: 10px;
+}
+
+.rodape__link {
+  color: var(--rodape-texto);
+  text-decoration: none;
+}
+
+.rodape__link:hover {
+  color: var(--rodape-dourado);
+  text-decoration: underline;
+}
+
+.rodape__link:focus-visible {
+  outline: 2px solid var(--rodape-dourado);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.rodape__base {
+  background: var(--rodape-verde-medio);
+  margin: 0 -24px;
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--rodape-texto-suave);
+}
+
+@media (max-width: 720px) {
+  .rodape__grade {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
