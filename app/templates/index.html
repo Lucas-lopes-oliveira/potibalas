@@ -97,54 +97,42 @@
       <span>PATRIMÔNIOS</span>
       <h2>Patrimônios Históricos do RN</h2>
       <p>
-        Conheça alguns dos locais que fazem parte da história da cidade.
+        Conheça alguns dos patrimônios que fazem parte da história do estado.
       </p>
     </div>
 
+    <form method="GET" class="d-flex gap-2 mb-4">
+        <input type="search" name="q" class="form-control" placeholder="Pesquisar matéria por título ou categoria..." value="{{ request.args.get('q', '') }}">
+        <button type="submit" class="btn">Pesquisar</button>
+    </form>
+
     <div class="row g-4">
-
         {% for materia in materias %}
-
             <div class="col-md-6 col-lg-4">
-
                 <article class="card-monumento">
-
                     {% if materia.imagem %}
-                            <img
-                                src="{{ url_for('static', filename='uploads/' + materia.imagem) }}"
-                                alt="{{ materia.titulo }}"
-                            >
-                        {% endif %}
+                        <img src="{{ url_for('static', filename='uploads/' + materia.imagem) }}" alt="{{ materia.titulo }}">
+                    {% endif %}
 
                     <div class="card-conteudo">
-
-                        <span class="categoria">
-                            {{ materia.categoria }}
-                        </span>
-
-                        <h3>
-                            {{ materia.titulo }}
-                        </h3>
-
-                        <p>
-                            {{ materia.texto }}
-                        </p>
-
-                        <a
-                            href="{{ url_for('main.materia', id=materia.id) }}"
-                            class="btn-card"
-                        >
-                            Saiba mais →
-                        </a>
-
+                        <span class="categoria">{{ materia.categoria }}</span>
+                        <h3>{{ materia.titulo }}</h3>
+                        <p>{{ materia.texto }}</p>
+                        <a href="{{ url_for('main.materia', id=materia.id) }}" class="btn-card">Saiba mais →</a>
                     </div>
-
                 </article>
-
             </div>
-
+        {% else %}
+            <div class="col-12">
+                <p class="text-center text-muted">
+                    {% if request.args.get('q') %}
+                        Nenhuma matéria encontrada para "{{ request.args.get('q') }}".
+                    {% else %}
+                        Nenhuma matéria cadastrada.
+                    {% endif %}
+                </p>
+            </div>
         {% endfor %}
-
     </div>
 
   </section>

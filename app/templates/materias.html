@@ -87,91 +87,46 @@
         </div>
 
 
+        <form method="GET" class="d-flex gap-2 mb-4">
+            <input type="search" name="q" class="form-control" placeholder="Pesquisar matéria por título ou categoria..." value="{{ request.args.get('q', '') }}">
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+        </form>
+
         <div class="row">
-
             {% for materia in materias %}
-
                 <div class="col-md-4 mb-4">
-
                     <div class="card h-100">
-
                         {% if materia.imagem %}
-                            <img
-                                src="{{ url_for('static', filename='uploads/' + materia.imagem) }}"
-                                alt="{{ materia.titulo }}"
-                            >
+                            <img src="{{ url_for('static', filename='uploads/' + materia.imagem) }}" alt="{{ materia.titulo }}">
                         {% endif %}
 
-
                         <div class="card-body">
-
-                            <h3 class="card-title">
-                                {{ materia.titulo }}
-                            </h3>
-
-                            <p class="text-muted">
-                                {{ materia.categoria }}
-                            </p>
-
-                            <p class="card-text">
-                                {{ materia.texto[:120] }}...
-                            </p>
-
+                            <h3 class="card-title">{{ materia.titulo }}</h3>
+                            <p class="text-muted">{{ materia.categoria }}</p>
+                            <p class="card-text">{{ materia.texto[:120] }}...</p>
 
                             <div class="d-flex gap-2">
+                                <a href="{{ url_for('main.materia', id=materia.id) }}" class="btn btn-primary">Ver</a>
+                                <a href="{{ url_for('main.editar_materia', id=materia.id) }}" class="btn btn-warning">Editar</a>
 
-                                <a 
-                                    href="{{ url_for('main.materia', id=materia.id) }}"
-                                    class="btn btn-primary">
-
-                                    Ver
-
-                                </a>
-
-                                <a 
-                                    href="{{ url_for('main.editar_materia', id=materia.id) }}"
-                                    class="btn btn-warning">
-
-                                    Editar
-
-                                </a>
-
-
-                                <form 
-                                    action="{{ url_for('main.excluir_materia', id=materia.id) }}"
-                                    method="POST">
-
-                                    <button 
-                                        type="submit"
-                                        class="btn btn-danger"
-                                        onclick="return confirm('Deseja realmente excluir esta matéria?')">
-
-                                        Excluir
-
-                                    </button>
-
+                                <form action="{{ url_for('main.excluir_materia', id=materia.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir esta matéria?')">Excluir</button>
                                 </form>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
-
             {% else %}
-
                 <div class="col-12">
-
-                    <p class="text-center">
-                        Nenhuma matéria cadastrada.
+                    <p class="text-center text-muted">
+                        {% if request.args.get('q') %}
+                            Nenhuma matéria encontrada para "{{ request.args.get('q') }}".
+                        {% else %}
+                            Nenhuma matéria cadastrada.
+                        {% endif %}
                     </p>
-
                 </div>
-
             {% endfor %}
-
         </div>
 
     </main>

@@ -14,15 +14,22 @@ def somente_admin():
 #Homepage 
 @main.route("/")
 def index():
+    pesquisa = request.args.get("q", "").strip()
 
-    materias = Materia.query.all()
+    consulta = Materia.query
 
-    print(materias)
+    if pesquisa:
+        consulta = consulta.filter(
+            db.or_(
+                Materia.titulo.ilike(f"%{pesquisa}%"),
+                Materia.categoria.ilike(f"%{pesquisa}%"),
+                Materia.texto.ilike(f"%{pesquisa}%")
+            )
+        )
 
-    return render_template(
-        "index.html",
-        materias=materias
-    )
+    materias = consulta.all()
+
+    return render_template("index.html", materias=materias)
 
 
 #Rota dinâmica
@@ -36,23 +43,28 @@ def materia(id):
         materia=materia
     )
 
-# LISTA
+# LISTA MATERIAS
 @main.route("/materias")
 def listar_materias():
+    pesquisa = request.args.get("q", "").strip()
 
-    acesso = somente_admin()
-    if acesso:
-        return acesso
+    consulta = Materia.query
 
-    materias = Materia.query.all()
+    if pesquisa:
+        consulta = consulta.filter(
+            db.or_(
+                Materia.titulo.ilike(f"%{pesquisa}%"),
+                Materia.categoria.ilike(f"%{pesquisa}%"),
+                Materia.texto.ilike(f"%{pesquisa}%")
+            )
+        )
 
-    return render_template(
-        "materias.html",
-        materias=materias
-    )
+    materias = consulta.all()
+
+    return render_template("materias.html", materias=materias)
 
 
-# CRIAR 
+# CRIAR MATERIA
 @main.route("/materias/criar", methods=["GET", "POST"])
 def criar_materia():
 
@@ -95,7 +107,7 @@ def criar_materia():
     return render_template("cadastrar_materia.html")
 
 
-# EDITAR 
+# EDITAR MATERIA    
 @main.route("/materias/editar/<int:id>", methods=["GET", "POST"])
 def editar_materia(id):
 
@@ -134,7 +146,7 @@ def editar_materia(id):
     )
 
 
-# EXCLUIR 
+# EXCLUIR MATERIA
 @main.route("/materia/<int:id>/excluir", methods=["POST"])
 def excluir_materia(id):
 
